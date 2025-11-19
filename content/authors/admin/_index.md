@@ -9,14 +9,14 @@ pronouns: he/him
 
 # Status emoji
 status:
-  text: aaa        # 想显示的文字
+  text:         # 想显示的文字
   icon: 🦁
 
 # Is this the primary user of the site?
 superuser: true
 
 # Role/position/tagline
-role: Student @ NTU
+role: Postgraduate @ NTU
 
 # Organizations/Affiliations to show in About widget
 organizations:
@@ -34,13 +34,13 @@ profiles:
   - icon: brands/x
     url: https://x.com/
   - icon: brands/instagram
-    url: https://www.instagram.com/
+    url: https://www.instagram.com/horntail_w/#
   - icon: brands/linkedin
     url: https://www.linkedin.com/
   # Link to a PDF of your resume/CV - upload it to `static/uploads/resume.pdf`
   - icon: academicons/cv
-    url: uploads/resume.pdf
-    label: Download my resume
+    url: https://github.com/Ginyee-W
+    label: My resume
   - icon: rss
     url: ./post/index.xml
     label: Subscribe to my blog via RSS feed
@@ -49,7 +49,7 @@ profiles:
 highlight_name: true
 
 # Author's website URL
-website: "aaa"
+website: "https://ginyee-w.github.io/"
 ---
 
 本页用作自学内容的整理和归档
