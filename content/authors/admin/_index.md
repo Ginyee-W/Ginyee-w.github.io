@@ -16,7 +16,7 @@ status:
 superuser: true
 
 # Role/position/tagline
-role: Postgraduate @ NTU
+role: Graduate @ NTU
 
 # Organizations/Affiliations to show in About widget
 organizations:
