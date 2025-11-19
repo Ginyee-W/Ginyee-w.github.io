@@ -28,7 +28,7 @@ organizations:
     url: https://www.ntu.edu.sg
 
 # Short bio (displayed in user profile at end of posts)
-bio:aaa
+bio: aaa
 
 # Social Networking
 # Need to use another icon? Simply download the SVG icon to your `assets/media/icons/` folder.
