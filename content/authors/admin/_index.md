@@ -8,8 +8,9 @@ title: 冰雪碧好喝
 pronouns: he/him
 
 # Status emoji
-status: aaa
-icon: 🦁
+status:
+  text: aaa        # 想显示的文字
+  icon: 🦁
 
 # Is this the primary user of the site?
 superuser: true
