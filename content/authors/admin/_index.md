@@ -3,7 +3,7 @@
 title: 冰雪碧好喝
 
 # Name pronunciation (optional)
-name_pronunciation: 
+name_pronunciation: aaa
 
 # Full name (for SEO)
 first_name: aaa
@@ -54,7 +54,7 @@ profiles:
 highlight_name: true
 
 # Author's website URL
-website: ""
+website: "aaa"
 ---
 
 本页用作自学内容的整理和归档
