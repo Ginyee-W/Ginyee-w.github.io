@@ -31,19 +31,17 @@ profiles:
   - icon: at-symbol
     url: 'mailto:wuji0031@ntu.edu.sg'
     label: E-mail Me
-  - icon: brands/x
-    url: https://x.com/
+  - icon: brands/whatsapp
+    text: 89656615
   - icon: brands/instagram
     url: https://www.instagram.com/horntail_w/#
-  - icon: brands/linkedin
+  - icon: brands/weixin
     url: https://www.linkedin.com/
   # Link to a PDF of your resume/CV - upload it to `static/uploads/resume.pdf`
   - icon: academicons/cv
     url: https://github.com/Ginyee-W
     label: My resume
-  - icon: rss
-    url: ./post/index.xml
-    label: Subscribe to my blog via RSS feed
+
 
 # Highlight the author in author lists? (true/false)
 highlight_name: true
