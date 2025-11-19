@@ -5,7 +5,7 @@
 
 # Appearance
 appearance:
-  mode: system
+  mode: dark
   color: blue
 
 # SEO
@@ -32,6 +32,7 @@ header:
     enable: true
     show_search: true
     show_theme_chooser: true
+    hide_on_scroll: true
 
 # Site footer
 footer:
