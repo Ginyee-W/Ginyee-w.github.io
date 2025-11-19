@@ -37,8 +37,6 @@ profiles:
     url: https://www.instagram.com/horntail_w/#
   - icon: brands/weixin
     label: wjy542219577
-  - icon: brands/qq
-    label: 542219577
   # Link to a PDF of your resume/CV - upload it to `static/uploads/resume.pdf`
   - icon: academicons/cv
     url: https://github.com/Ginyee-W
