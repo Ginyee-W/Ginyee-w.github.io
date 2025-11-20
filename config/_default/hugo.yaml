@@ -74,6 +74,19 @@ markup:
   goldmark:
     renderer:
       unsafe: true # 允许渲染行内代码、HTML 标签（关键配置）
+      hardWraps: false # 不强制换行，遵循 Markdown 标准
+      xhtml: false
+    extensions:
+      typographer: true # 启用标点优化（可选）
+      linkify: true # 自动链接URL（可选）
+  highlight:
+    codeFences: true # 启用代码块渲染
+    guessSyntax: true # 自动识别代码语言
+    lineNos: false # 是否显示行号（按需开启，true 为显示）
+    lineNumbersInTable: true
+    tabWidth: 4
+    noClasses: false # 允许主题样式控制代码高亮（关键，避免样式冲突）
+    style: dracula # 代码高亮主题（可选，比如：github、monokai、solarized-dark 等）
 related:
   threshold: 80
   includeNewer: true
