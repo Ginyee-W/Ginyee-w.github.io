@@ -20,17 +20,7 @@ tags:
 
 
 {{< toc mobile_only=true is_open=true >}}
-## Like模糊查询优化
 
-**1.合理使用索引**
-
-- **前缀匹配**：使用 `LIKE 'prefix%'` 的形式，这种情况下 MySQL 能够利用索引，比如：
-
-```sql
-SELECT * FROM users WHERE username LIKE 'John%';
-```
-
-如果 `username` 字段有索引，前缀匹配会用到索引。
 
 
 
@@ -115,65 +105,22 @@ WHERE created_at >= '2023-01-01'
 
 
 
-
-
-
-
-## 函数对索引的影响
-
-在MySQL中，**函数并非一定会导致索引失效**，其影响取决于函数的使用场景（是否作用于索引列的查询条件）。索引是基于列的原始值构建的，若函数改变了索引列的原始值，数据库无法利用索引的排序信息，会触发全表扫描；反之则不影响索引生效。
-
-**一、会导致索引失效的情况**
-
-1. **对索引列直接使用函数（WHERE/ON条件中）**
-   若在查询条件中对索引列应用函数（如`LOWER()`、`DATE_FORMAT()`），会破坏索引列的原始值，导致索引无法被使用。
-   示例：
-
-   ```sql
-   SELECT * FROM users WHERE LOWER(username) = 'john'; -- username是索引列，但函数导致索引失效
-   ```
-
-2. **索引列参与计算表达式**
-   若索引列参与运算（如`column + 1`），数据库无法直接匹配索引值，会放弃使用索引。
-   示例：
-
-   ```sql
-   SELECT * FROM orders WHERE price + 10 > 100; -- price是索引列，运算导致索引失效
-   ```
-
-**二、不会导致索引失效的情况**
-
-**函数在索引范围之外使用**
-若函数仅用于`SELECT`列表、`ORDER BY`、`GROUP BY`等非查询条件的位置，索引列的原始值未被修改，索引仍可正常生效。
-示例：
-
+## 索引
 ```sql
-SELECT UPPER(username) FROM users WHERE username = 'john'; -- WHERE中使用原始索引列，索引生效
+CREATE INDEX idx_name ON users(name); -- 为 'users' 表中的 'name' 列创建普通索引
+ALTER TABLE users ADD PRIMARY KEY (id); -- 为 'users' 表的主键 'id' 添加主键索引
+CREATE UNIQUE INDEX idx_email ON users(email); -- 为 'users' 表的 'email' 列创建唯一索引
 ```
-
-**三、优化建议**
-
-1. **使用生成列（持久化计算列）**
-   对需要频繁通过函数查询的索引列，创建预计算的生成列并建立索引，避免实时函数计算。
-   示例：
-
-   ```sql
-   ALTER TABLE users ADD username_lower VARCHAR(255) 
-   GENERATED ALWAYS AS (LOWER(username)) STORED,
-   ADD INDEX idx_username_lower (username_lower);
-   ```
-
-2. **应用层预处理**
-   在应用程序中提前处理函数逻辑（如统一字符串大小写），避免在数据库查询条件中使用函数。
-
-3. **用EXPLAIN验证索引使用**
-   通过`EXPLAIN`语句分析查询计划，确认索引是否被有效利用。
-
-
-
-
-
-## 索引失效反而提升效率
+### 1. B-Tree 索引（B树索引）
+**特点**：B-Tree是最常见的索引类型，几乎所有的存储引擎都支持这种索引。它基于平衡二叉树的数据结构，能够高效地进行范围查询和精确查找。
+**适用场景**：适用于大多数的查询需求，特别是需要进行范围搜索或有序数据的检索时效果更佳。例如，WHERE子句中的等值查询、ORDER BY、GROUP BY等操作。
+### 2. Hash 索引
+**特点**：基于哈希表实现，只有精确匹配索引列的查询才能使用这种索引。对于非等值查询（如范围查询），Hash索引是不适用的。
+**适用场景**：适用于需要快速查找某个特定值的场景，例如主键、唯一键等。由于哈希表是基于数组的，所以检索速度非常快，但不适用于排序和范围搜索。
+### 3. 组合索引（复合索引）
+**特点**：由多个列组成的索引，可以覆盖一个或多个列上的查询。MySQL会自动优化组合索引的使用方式。
+**适用场景**：当经常需要同时根据多个列进行查询时，使用组合索引可以显著提高查询效率。例如，对于WHERE子句中包含多个条件的查询，可以通过创建复合索引来加速。
+### 索引失效反而提升效率
 
 在大多数情况下，索引在查询中是用于提高性能的，因为它们加速了数据查找。然而，有些特殊情况下，索引的使用会导致性能下降，索引失效反而可能提升查询效率。以下是一些例子：
 
@@ -195,12 +142,41 @@ SELECT UPPER(username) FROM users WHERE username = 'john'; -- WHERE中使用原�
 6. **数据分布与优化器误判**：
    - 在某些特定情况下，如果索引导致MySQL错误地估计数据分布或行数，手动禁用索引或提示优化器使用不同策略可能提升性能。
 
+7. **SELECT 语句中对列进行运算**：
+    - MySQL在进行索引选择时，会考虑查询条件中的表达式。如果查询条件中有函数或表达式（例如 `WHERE LENGTH(column) = 5`），MySQL可能会放弃使用索引。
+   ```sql
+   -- 不推荐
+   SELECT * FROM table_name WHERE LENGTH(column) = 5;
+   -- 推荐
+   UPDATE column SET column = 'value' WHERE column = 'value';
+   ```
 
+8. **LIKE 查询以%开头**：
+    - 当使用 `LIKE` 进行模糊查询时，如果搜索条件以通配符（如 `%`）开始，MySQL可能会放弃使用索引。
+   ```sql
+   -- 不推荐
+   SELECT * FROM table_name WHERE column LIKE '%value';
+   -- 推荐
+   SELECT * FROM table_name WHERE column LIKE 'value%';
+   ```
 
+      对于需要匹配后缀的情况（即 `LIKE '%suffix'`），可以创建一个辅助列存储反转字符串，并基于此列进行前缀匹配。
 
+      - **创建反向字符串**：
 
+      ```sql
+      ALTER TABLE users ADD reversed_username VARCHAR(255);
+      UPDATE users SET reversed_username = REVERSE(username);
+      CREATE INDEX idx_reversed_username ON users(reversed_username);
 
-
+9. **数据类型不匹配**：
+   - 如果查询条件中的列和索引列的数据类型不匹配，MySQL可能会放弃使用索引。例如，如果有一个字符串类型的索引列，但查询时将其作为数值类型使用。
+   ```sql
+   -- 不推荐
+   SELECT * FROM table_name WHERE column = 123;
+   -- 推荐
+   UPDATE column SET column = 'value' WHERE column = 'value';
+   ```
 
 
 
