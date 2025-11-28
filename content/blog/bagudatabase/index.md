@@ -231,7 +231,7 @@ CREATE UNIQUE INDEX idx_email ON users(email); -- 为 'users' 表的 'email' 列
   - `WHERE column1 = 'value'`
   - `WHERE column1 = 'value' AND column2 = 'value'`
   但是，以下情况不能使用这个索引：
-- `WHERE column2 = 'value'`（因为最左边的`column1`没有被匹配）
+  - `WHERE column2 = 'value'`（因为最左边的`column1`没有被匹配）
 
 2. **最左匹配原则的存在有几个原因：**
    1. **优化查询性能**：对于大多数查询，只需要使用索引的前缀就可以找到所需的数据。这样可以避免全表扫描，从而提高查询效率。
