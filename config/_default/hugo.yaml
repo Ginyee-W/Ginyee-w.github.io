@@ -93,7 +93,7 @@ markup:
     lineNumbersInTable: true
     tabWidth: 4
     noClasses: false
-    style: github  # 用 Github 同款高亮样式（和你 Github 文档显示一致）
+    style: monokai   
   tableOfContents:
     startLevel: 2
     endLevel: 3
