@@ -1,0 +1,21 @@
+/* assets/css/custom.css */
+
+/* 1. 去掉所有 code 前后的反引号（关键） */
+.prose code::before,
+.prose code::after {
+  content: none !important;
+}
+
+/* 2. （可选）自定义行内代码的样式，让它看起来像高亮 */
+.prose code {
+  padding: 0.2em 0.4em;
+  background-color: rgba(110, 118, 129, 0.12);
+  border-radius: 4px;
+  font-size: 0.95em;
+}
+
+/* 3. （可选）代码块里就不要再额外的背景了，交给主题自己控制 */
+.prose pre code {
+  background-color: transparent;
+  padding: 0;
+}
