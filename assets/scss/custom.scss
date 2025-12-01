@@ -1,18 +1,11 @@
 /* assets/scss/custom.scss */
 
-/* 尝试使用更高的选择器权重（body 元素） */
-body code::before,
-body code::after {
-    /* 强制移除反引号内容 */
-    content: none !important; 
+/* 覆盖 ::before (前面的引号) */
+.prose :where(code):not(:where([class~=not-prose], [class~=not-prose] *))::before {
+    content: none !important;
 }
 
-/* 可选：为行内代码块添加基础的高亮样式，使其更突出 */
-/* 如果您不需要自定义颜色，可以只使用上面的 content: none 规则 */
-body code {
-    padding: 0.2em 0.4em !important; 
-    margin: 0 0.1em !important;
-    font-size: 85% !important;
-    background-color: rgba(110, 118, 129, 0.1) !important;
-    border-radius: 6px !important;
+/* 覆盖 ::after (后面的引号) */
+.prose :where(code):not(:where([class~=not-prose], [class~=not-prose] *))::after {
+    content: none !important;
 }
