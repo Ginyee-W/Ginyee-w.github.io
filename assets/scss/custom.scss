@@ -1,0 +1,18 @@
+/* assets/scss/custom.scss */
+
+/* 覆盖行内代码块 (<code>) 的默认样式 */
+code::before,
+code::after {
+    /* 将内容设置为空，移除反引号 */
+    content: none !important; 
+}
+
+/* 可选：为行内代码块添加基础的高亮样式，使其更突出 */
+code {
+    /* 这部分样式您可以根据喜好调整 */
+    padding: 0.2em 0.4em;
+    margin: 0 0.1em;
+    font-size: 85%;
+    background-color: rgba(110, 118, 129, 0.1); /* 浅灰色背景 */
+    border-radius: 6px;
+}
