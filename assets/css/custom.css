@@ -19,3 +19,12 @@
   background-color: transparent;
   padding: 0;
 }
+
+/* SQL 关键字（SELECT / FROM / WHERE …） */
+code.language-sql .k,
+code.language-sql .kc,
+code.language-sql .kd,
+code.language-sql .kr {
+  color: #4c20fa !important;
+  font-weight: bold;
+}
