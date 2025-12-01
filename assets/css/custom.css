@@ -20,11 +20,71 @@
   padding: 0;
 }
 
-/* SQL 关键字（SELECT / FROM / WHERE …） */
-code.language-sql .k,
-code.language-sql .kc,
-code.language-sql .kd,
-code.language-sql .kr {
-  color: #4c20fa !important;
+/* ===========================
+ *  Notepad 风格的 SQL 配色
+ *    只影响 ```sql 代码块
+ * =========================== */
+
+/* 默认文字颜色（普通标识符） */
+.highlight code.language-sql,
+.chroma code.language-sql {
+  color: #000000; /* 黑色 */
+}
+
+/* 关键字：SELECT / FROM / WHERE / JOIN / INSERT ... */
+.highlight code.language-sql .k,
+.highlight code.language-sql .kc,
+.highlight code.language-sql .kd,
+.highlight code.language-sql .kr,
+.chroma code.language-sql .k,
+.chroma code.language-sql .kc,
+.chroma code.language-sql .kd,
+.chroma code.language-sql .kr {
+  color: #0000ff;      /* 亮蓝 */
   font-weight: bold;
+}
+
+/* 函数 / 内建名字：COUNT, SUM, AVG 等 */
+.highlight code.language-sql .nf,
+.highlight code.language-sql .nb,
+.chroma code.language-sql .nf,
+.chroma code.language-sql .nb {
+  color: #0000ff;      /* 同样用蓝色 */
+}
+
+/* 字符串：'abc', "abc" */
+.highlight code.language-sql .s,
+.highlight code.language-sql .s1,
+.highlight code.language-sql .s2,
+.chroma code.language-sql .s,
+.chroma code.language-sql .s1,
+.chroma code.language-sql .s2 {
+  color: #a31515;      /* 偏暗红，类似 VS / Notepad++ */
+}
+
+/* 数字常量：1, 2.5, 100 等 */
+.highlight code.language-sql .m,
+.highlight code.language-sql .mi,
+.highlight code.language-sql .mf,
+.chroma code.language-sql .m,
+.chroma code.language-sql .mi,
+.chroma code.language-sql .mf {
+  color: #800080;      /* 紫色 */
+}
+
+/* 注释：-- comment / /* comment *\/ */
+.highlight code.language-sql .c,
+.highlight code.language-sql .c1,
+.highlight code.language-sql .cm,
+.chroma code.language-sql .c,
+.chroma code.language-sql .c1,
+.chroma code.language-sql .cm {
+  color: #008000;      /* 绿色 */
+  font-style: italic;
+}
+
+/* 运算符：+ - * / = <> 等，保持默认黑色 */
+.highlight code.language-sql .o,
+.chroma code.language-sql .o {
+  color: #000000;
 }
