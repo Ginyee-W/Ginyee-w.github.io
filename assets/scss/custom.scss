@@ -1,18 +1,18 @@
 /* assets/scss/custom.scss */
 
-/* 覆盖行内代码块 (<code>) 的默认样式 */
-code::before,
-code::after {
-    /* 将内容设置为空，移除反引号 */
+/* 尝试使用更高的选择器权重（body 元素） */
+body code::before,
+body code::after {
+    /* 强制移除反引号内容 */
     content: none !important; 
 }
 
 /* 可选：为行内代码块添加基础的高亮样式，使其更突出 */
-code {
-    /* 这部分样式您可以根据喜好调整 */
-    padding: 0.2em 0.4em;
-    margin: 0 0.1em;
-    font-size: 85%;
-    background-color: rgba(110, 118, 129, 0.1); /* 浅灰色背景 */
-    border-radius: 6px;
+/* 如果您不需要自定义颜色，可以只使用上面的 content: none 规则 */
+body code {
+    padding: 0.2em 0.4em !important; 
+    margin: 0 0.1em !important;
+    font-size: 85% !important;
+    background-color: rgba(110, 118, 129, 0.1) !important;
+    border-radius: 6px !important;
 }
