@@ -22,7 +22,7 @@
 
 /* 4. 让正文更宽一点（覆盖 tailwind prose 的默认 65ch） */
 main .prose {
-  max-width: 90ch !important;   /* 按自己感觉调，比如 75ch、90ch 都可以 */
+  max-width: 120ch !important;   /* 按自己感觉调，比如 75ch、90ch 都可以 */
 }
 
 /* SQL 关键字（SELECT / FROM / WHERE …） */
