@@ -1,18 +1,17 @@
-/* assets/scss/custom.scss - 覆盖规则 */
+/* assets/scss/custom.scss - 修正后的代码 */
 
 /* 1. 强制移除 ::before (前面的引号) */
-.prose :where(code):not(:where([class~=not-prose], [class~=not-prose] *))::before {
+.prose :where(code):not(:where([class~=not-prose], [class~=not-prose] *))::before { // 注意这里的 ::before
     content: none !important;
 }
 
 /* 2. 强制移除 ::after (后面的引号) */
-.prose :where(code):not(:where([class~=not-prose], [class~=not-prose] *))::after {
+.prose :where(code):not(:where([class~=not-prose], [class~=not-prose] *))::after { // 注意这里的 ::after
     content: none !important;
 }
 
 /* 3. 可选：确保行内代码块自身的样式也被覆盖或自定义 */
 .prose :where(code):not(:where([class~=not-prose], [class~=not-prose] *)) {
-    /* 这里的样式可以自定义，比如添加浅灰色背景 */
     padding: 0.2em 0.4em !important;
     background-color: rgba(110, 118, 129, 0.1) !important;
     border-radius: 4px !important;
