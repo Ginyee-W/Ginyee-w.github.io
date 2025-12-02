@@ -1,4 +1,5 @@
-<!-- 简单首页轮播相册：{{< home-slider >}} -->
+
+<!-- 简单首页轮播相册 shortcode：home-slider -->
 <style>
   .hb-slider {
     max-width: 960px;
@@ -61,7 +62,6 @@
     background: rgba(255,255,255,0.95);
   }
 
-  /* 小屏高度略小一点 */
   @media (max-width: 640px) {
     .hb-slide img { height: 220px; }
   }
@@ -102,7 +102,6 @@
   let index = 0;
   let timer = null;
 
-  // 生成小圆点
   for (let i = 0; i < total; i++) {
     const dot = document.createElement('button');
     dot.type = 'button';
@@ -115,13 +114,15 @@
   function goTo(i) {
     index = (i + total) % total;
     track.style.transform = 'translateX(' + (-index * 100) + '%)';
-    dots.forEach(d => d.classList.toggle('hb-slider-dot-active',
-                                         Number(d.dataset.index) === index));
+    dots.forEach(d => d.classList.toggle(
+      'hb-slider-dot-active',
+      Number(d.dataset.index) === index
+    ));
   }
 
   function startAuto() {
     stopAuto();
-    timer = setInterval(() => goTo(index + 1), 3000); // 5 秒换一张
+    timer = setInterval(() => goTo(index + 1), 5000);
   }
   function stopAuto() {
     if (timer) clearInterval(timer);
@@ -130,13 +131,15 @@
   prev.addEventListener('click', () => { goTo(index - 1); startAuto(); });
   next.addEventListener('click', () => { goTo(index + 1); startAuto(); });
   dots.forEach(dot => {
-    dot.addEventListener('click', () => { goTo(Number(dot.dataset.index)); startAuto(); });
+    dot.addEventListener('click', () => {
+      goTo(Number(dot.dataset.index));
+      startAuto();
+    });
   });
 
   slider.addEventListener('mouseenter', stopAuto);
   slider.addEventListener('mouseleave', startAuto);
 
-  // 初始化
   goTo(0);
   startAuto();
 })();
