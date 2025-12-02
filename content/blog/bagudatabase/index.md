@@ -234,46 +234,65 @@ CREATE INDEX idx_name_age ON my_table(name, age);
 ### 分析查询索引
    1. **使用 `EXPLAIN` 命令**
    `EXPLAIN` 是 MySQL 提供的一个关键字，用于解释（即展示）MySQL 如何执行一个特定的 SQL 查询。通过查看 `EXPLAIN` 的结果，你可以了解 MySQL 是如何处理你的查询的，包括是否使用了索引。
+
    **示例：**
    ```sql
    EXPLAIN SELECT * FROM your_table WHERE column = 'value';
    ```
    2. **使用 `SHOW INDEXES`**
    `SHOW INDEXES` 命令可以显示表的索引信息。你可以通过这个命令来检查你的表是否已经创建了所期望的索引。
+
    **示例：**
    ```sql
    SHOW INDEXES FROM your_table;
    ```
    3. **使用 `ANALYZE TABLE`**
    `ANALYZE TABLE` 可以更新表的统计信息，包括行数、删除的行数等。这些统计信息对于优化器选择最优查询计划非常重要。通过查看统计信息，你也可以间接了解索引的使用情况。
+
    **示例：**
    ```sql
    ANALYZE TABLE your_table;
    ```
    4. **使用 `SHOW TABLE STATUS`**
    `SHOW TABLE STATUS` 可以显示表的详细状态信息，包括行数、删除的行数等。通过查看这些信息，你也可以了解索引的使用情况。
+
    **示例：**
    ```sql
    SHOW TABLE STATUS LIKE 'your_table';
    ```
    5. **使用性能监控工具**
    MySQL 提供了一些性能监控工具，如 `mysqldumpslow`, `mysqlsla` 等，这些工具可以帮助你分析查询日志，找出低效的查询语句。
+
    **示例：**
    - **mysqldumpslow**: 用于分析慢查询日志。
    - **mysqlsla**: 用于分析慢查询日志和二进制日志。
    6. **使用 `CREATE INDEX`**
    如果你怀疑某个查询没有使用索引，但又不知道为什么，可以直接创建一个索引来验证效果。
+
    **示例：**
    ```sql
    CREATE INDEX idx_column ON your_table(column);
    ```
    7. **使用 `OPTIMIZE TABLE`**
    对于已经删除大量行或者已经更新（但没有物理上删除）的表，可以使用 `OPTIMIZE TABLE` 来整理表数据，这可能会优化查询性能。
+
    **示例：**
    ```sql
    OPTIMIZE TABLE your_table;
    ```
+### 索引回表
+**索引回表（Index Seek to Table Scan）**是指在使用索引查询数据时，MySQL先通过索引定位到记录所在的物理位置，然后再根据这个位置读取实际的行数据。
+例如，假设有一个表`users`，其中包含以下列：`id`, `name`, 和 `age`。如果你创建了一个复合索引（`idx_name_age`）包含`name`和`age`列，并且你执行一个查询只选择这两个字段：
 
+```sql
+SELECT name, age FROM users WHERE name = 'John' AND age = 30;
+```
+在这种情况下，MySQL可以使用`idx_name_age`索引来定位符合条件的记录，但由于查询只涉及`name`和`age`列，而不需要实际的行数据（即不需要读取`id`列的数据），所以它不会“回表”。
+然而，如果查询中包含了未被索引覆盖的其他列，例如：
+```sql
+SELECT * FROM users WHERE name = 'John' AND age = 30;
+```
+在这种情况下，MySQL使用`idx_name_age`索引来定位记录后，仍然需要根据找到的记录位置去表中读取`id`列的数据，这就是所谓的“回表”操作。
 ## License
 
 Copyright 2025-present [Ginyee-W](https://ginyee-w.github.io/).
