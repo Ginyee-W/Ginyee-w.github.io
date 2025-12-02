@@ -282,8 +282,8 @@ CREATE INDEX idx_name_age ON my_table(name, age);
    ```
 ### 索引回表
 **索引回表（Index Seek to Table Scan）**是指在使用索引查询数据时，MySQL先通过索引定位到记录所在的物理位置，然后再根据这个位置读取实际的行数据。
-例如，假设有一个表`users`，其中包含以下列：`id`, `name`, 和 `age`。如果你创建了一个复合索引（`idx_name_age`）包含`name`和`age`列，并且你执行一个查询只选择这两个字段：
 
+例如，假设有一个表`users`，其中包含以下列：`id`, `name`, 和 `age`。如果你创建了一个复合索引（`idx_name_age`）包含`name`和`age`列，并且你执行一个查询只选择这两个字段：
 ```sql
 SELECT name, age FROM users WHERE name = 'John' AND age = 30;
 ```
@@ -293,6 +293,8 @@ SELECT name, age FROM users WHERE name = 'John' AND age = 30;
 SELECT * FROM users WHERE name = 'John' AND age = 30;
 ```
 在这种情况下，MySQL使用`idx_name_age`索引来定位记录后，仍然需要根据找到的记录位置去表中读取`id`列的数据，这就是所谓的“回表”操作。
+
+
 ## License
 
 Copyright 2025-present [Ginyee-W](https://ginyee-w.github.io/).
