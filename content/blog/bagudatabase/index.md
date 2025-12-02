@@ -250,29 +250,30 @@ CREATE INDEX idx_name_age ON my_table(name, age);
    ```sql
    ANALYZE TABLE your_table;
    ```
-   4.**使用 `SHOW TABLE STATUS`**
+   4. **使用 `SHOW TABLE STATUS`**
    `SHOW TABLE STATUS` 可以显示表的详细状态信息，包括行数、删除的行数等。通过查看这些信息，你也可以了解索引的使用情况。
    **示例：**
    ```sql
    SHOW TABLE STATUS LIKE 'your_table';
    ```
-   5.**使用性能监控工具**
+   5. **使用性能监控工具**
    MySQL 提供了一些性能监控工具，如 `mysqldumpslow`, `mysqlsla` 等，这些工具可以帮助你分析查询日志，找出低效的查询语句。
    **示例：**
    - **mysqldumpslow**: 用于分析慢查询日志。
    - **mysqlsla**: 用于分析慢查询日志和二进制日志。
-   6.**使用 `CREATE INDEX`**
+   6. **使用 `CREATE INDEX`**
    如果你怀疑某个查询没有使用索引，但又不知道为什么，可以直接创建一个索引来验证效果。
    **示例：**
    ```sql
    CREATE INDEX idx_column ON your_table(column);
    ```
-   7.**使用 `OPTIMIZE TABLE`**
+   7. **使用 `OPTIMIZE TABLE`**
    对于已经删除大量行或者已经更新（但没有物理上删除）的表，可以使用 `OPTIMIZE TABLE` 来整理表数据，这可能会优化查询性能。
    **示例：**
    ```sql
    OPTIMIZE TABLE your_table;
    ```
+
 ## License
 
 Copyright 2025-present [Ginyee-W](https://ginyee-w.github.io/).
