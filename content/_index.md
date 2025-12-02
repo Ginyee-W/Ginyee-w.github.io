@@ -19,16 +19,6 @@ sections:
         image : 'content/authors/admin/avatar.jpg'
         size: medium
         shape: circle
-    # 2. 首页轮播相册（自定义 shortcode）
-  - block: markdown
-    id: home-slider
-    content:
-      title: ''
-      text: |-
-        {{< home-slider >}}
-    design:
-      spacing:
-        padding: ['2rem', 0, '4rem', 0]
   # ③ 原来的文章列表 block 保持不动
   - block: collection
     content:
