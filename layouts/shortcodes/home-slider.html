@@ -1,0 +1,143 @@
+<!-- 简单首页轮播相册：{{< home-slider >}} -->
+<style>
+  .hb-slider {
+    max-width: 960px;
+    margin: 0 auto 2.5rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+  }
+  .hb-slider-track {
+    display: flex;
+    transition: transform 0.6s ease-in-out;
+  }
+  .hb-slide {
+    min-width: 100%;
+    flex-shrink: 0;
+  }
+  .hb-slide img {
+    display: block;
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+  }
+  .hb-slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.4rem 0.7rem;
+    border-radius: 9999px;
+    border: none;
+    background: rgba(0,0,0,0.45);
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.3rem;
+    line-height: 1;
+  }
+  .hb-slider-btn:hover {
+    background: rgba(0,0,0,0.7);
+  }
+  .hb-slider-btn-prev { left: 0.75rem; }
+  .hb-slider-btn-next { right: 0.75rem; }
+
+  .hb-slider-dots {
+    position: absolute;
+    bottom: 0.7rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.4rem;
+  }
+  .hb-slider-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+    background: rgba(255,255,255,0.5);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  .hb-slider-dot-active {
+    background: rgba(255,255,255,0.95);
+  }
+
+  /* 小屏高度略小一点 */
+  @media (max-width: 640px) {
+    .hb-slide img { height: 220px; }
+  }
+</style>
+
+<div class="hb-slider" id="home-slider">
+  <div class="hb-slider-track">
+    <!-- 在这里换成你自己的图片，支持 PNG/JPG -->
+    <div class="hb-slide">
+      <img src="/media/slider/siguniangshan.jpg" alt="四姑娘山">
+    </div>
+    <div class="hb-slide">
+      <img src="/media/slider/westlake.jpg" alt="断桥残雪">
+    </div>
+    <div class="hb-slide">
+      <img src="/media/slider/zhengyangmen.jpg" alt="正阳门">
+    </div>
+  </div>
+
+  <button class="hb-slider-btn hb-slider-btn-prev" type="button" aria-label="Previous">‹</button>
+  <button class="hb-slider-btn hb-slider-btn-next" type="button" aria-label="Next">›</button>
+
+  <div class="hb-slider-dots"></div>
+</div>
+
+<script>
+(function () {
+  const slider = document.getElementById('home-slider');
+  if (!slider) return;
+
+  const track  = slider.querySelector('.hb-slider-track');
+  const slides = slider.querySelectorAll('.hb-slide');
+  const prev   = slider.querySelector('.hb-slider-btn-prev');
+  const next   = slider.querySelector('.hb-slider-btn-next');
+  const dotsWrap = slider.querySelector('.hb-slider-dots');
+
+  const total = slides.length;
+  let index = 0;
+  let timer = null;
+
+  // 生成小圆点
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'hb-slider-dot' + (i === 0 ? ' hb-slider-dot-active' : '');
+    dot.dataset.index = i;
+    dotsWrap.appendChild(dot);
+  }
+  const dots = dotsWrap.querySelectorAll('.hb-slider-dot');
+
+  function goTo(i) {
+    index = (i + total) % total;
+    track.style.transform = 'translateX(' + (-index * 100) + '%)';
+    dots.forEach(d => d.classList.toggle('hb-slider-dot-active',
+                                         Number(d.dataset.index) === index));
+  }
+
+  function startAuto() {
+    stopAuto();
+    timer = setInterval(() => goTo(index + 1), 3000); // 5 秒换一张
+  }
+  function stopAuto() {
+    if (timer) clearInterval(timer);
+  }
+
+  prev.addEventListener('click', () => { goTo(index - 1); startAuto(); });
+  next.addEventListener('click', () => { goTo(index + 1); startAuto(); });
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => { goTo(Number(dot.dataset.index)); startAuto(); });
+  });
+
+  slider.addEventListener('mouseenter', stopAuto);
+  slider.addEventListener('mouseleave', startAuto);
+
+  // 初始化
+  goTo(0);
+  startAuto();
+})();
+</script>
