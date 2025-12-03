@@ -3,7 +3,7 @@
   .hero-slider-root {
     position: relative;
     width: 100vw;
-    min-height: 60vh;
+    height: 60vh;              /* 固定高度，避免被压扁 */
     margin-left: 50%;
     transform: translateX(-50%);
     overflow: hidden;
@@ -103,7 +103,7 @@
 
   @media (max-width: 640px) {
     .hero-slider-root {
-      min-height: 55vh;
+      height: 55vh;
     }
     .hero-slide-text h1 {
       font-size: 1.9rem;
@@ -118,7 +118,7 @@
   <div class="hero-slider-track">
     <!-- Slide 1：第一张图 + 对应文字 -->
     <section class="hero-slide">
-      <img src="/media/siguniangshan.jpg" alt="Slide 1">
+      <img src="/media/siguniangshan.jpg" alt="Siguniangshan">
       <div class="hero-slide-overlay">
         <div class="hero-slide-text">
           <h1>冰雪碧好喝</h1>
@@ -129,33 +129,18 @@
       </div>
     </section>
 
-    <!-- Slide 2：第二张图 + 对应文字（随便改成你想要的文案） -->
+    <!-- Slide 2：第二张图 + 对应文字 -->
     <section class="hero-slide">
-      <img src="/media/zhengyangmen.jpg" alt="Slide 2">
+      <img src="/media/zhengyangmen.jpg" alt="Zhengyangmen">
       <div class="hero-slide-overlay">
         <div class="hero-slide-text">
-          <h1>兴趣 & 研究方向</h1>
+          <h1>兴趣 &amp; 研究方向</h1>
           <h2>Graph Mining · Network Science</h2>
           <p>社区发现 · 关键节点 · 时序建模</p>
           <p>欢迎交流学习与合作</p>
         </div>
       </div>
     </section>
-
-    <!-- 如果以后要再加图，复制这个 section 再改图片和文字即可 -->
-    <!--
-    <section class="hero-slide">
-      <img src="/media/xxx.jpg" alt="Slide 3">
-      <div class="hero-slide-overlay">
-        <div class="hero-slide-text">
-          <h1>第三张图标题</h1>
-          <h2>副标题</h2>
-          <p>说明文字 1</p>
-          <p>说明文字 2</p>
-        </div>
-      </div>
-    </section>
-    -->
   </div>
 
   <button class="hero-slider-btn hero-slider-btn-prev" type="button" aria-label="Previous">‹</button>
