@@ -112,3 +112,11 @@ sitemap:
   _merge: deep
 minify:
   _merge: deep
+
+enableGitInfo: true
+
+frontmatter:
+  lastmod:
+    - lastmod
+    - :git
+    - date

@@ -1,7 +1,7 @@
 ---
 title: 数据库八股
 summary: 笔面试中有关数据库的八股试题整理
-date: 2025-11-20
+date: 2025-12-01
 
 # Featured image
 # Place an image named `featured.jpg/png` in this page's folder and customize its options here.
@@ -382,6 +382,8 @@ MySQL 中的锁是一种用于管理并发访问数据库的机制。它确保�
 
 - 仅统计总行数：用 `COUNT(*)` 或 `COUNT(1)`（推荐 `COUNT(*)`）。
 - 统计指定列非 `NULL` 行数：用 `COUNT(column_name)`。
+
+111
 
 
 
