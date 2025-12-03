@@ -4,16 +4,16 @@ date: 2023-10-24
 type: landing
 
 sections:
-    # 1. 顶部 Hero 轮播条
+    # 2. 最新照片：横向可滚动
   - block: markdown
-    id: hero-slider
+    id: latest-photos
     content:
       title: ''
       text: |-
-        {{< hero-slider >}}
+        {{< photo-strip >}}
     design:
       spacing:
-        padding: [0, 0, 0, 0]
+        padding: ['3rem', 0, '3rem', 0]
   # ② 原来的简介 block 保持不动
   - block: resume-biography
     content:
