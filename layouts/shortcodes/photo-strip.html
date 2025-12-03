@@ -150,3 +150,159 @@
   });
 })();
 </script>
+
+
+
+<!-- 横向自动滚动照片条 shortcode：photo-strip -->
+<style>
+  .ps-root {
+    max-width: 1080px;
+    margin: 0 auto 3rem;
+  }
+  .ps-header {
+    margin-bottom: 0.75rem;
+  }
+  .ps-header h2 {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .ps-header-line {
+    width: 140px;
+    height: 2px;
+    background-color: #333;
+  }
+
+  .ps-strip {
+    position: relative;
+  }
+
+  .ps-track {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 0.25rem 0 0.75rem;
+    scroll-behavior: smooth;
+    scrollbar-width: none;          /* Firefox 隐藏滚动条 */
+  }
+  .ps-track::-webkit-scrollbar {    /* Chrome / Edge 隐藏滚动条 */
+    display: none;
+  }
+
+  .ps-track a {
+    flex: 0 0 260px;                /* 每张图宽度，桌面端 */
+    text-decoration: none;
+  }
+
+  .ps-track img {
+    display: block;
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .ps-track img:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+  }
+
+  @media (max-width: 768px) {
+    .ps-track a {
+      flex: 0 0 70vw;               /* 小屏幕一张占 70% 宽 */
+    }
+    .ps-track img {
+      height: 220px;
+    }
+  }
+</style>
+
+<section class="ps-root" id="photo-strip">
+  <header class="ps-header">
+    <h2>Latest photos</h2>
+    <div class="ps-header-line"></div>
+  </header>
+
+  <div class="ps-strip">
+    <div class="ps-track">
+      <!-- 想放多少张图就写多少个 <a>，下面是示例 -->
+
+      <a href="/media/siguniangshan.jpg" target="_blank" rel="noopener">
+        <img src="/media/siguniangshan.jpg" alt="Siguniangshan">
+      </a>
+
+      <a href="/media/zhengyangmen.jpg" target="_blank" rel="noopener">
+        <img src="/media/zhengyangmen.jpg" alt="Zhengyangmen">
+      </a>
+
+      <a href="/media/yuehe.jpg" target="_blank" rel="noopener">
+        <img src="/media/yuehe.jpg" alt="Yuehe">
+      </a>
+
+      <a href="/media/thegreatwall.jpg" target="_blank" rel="noopener">
+        <img src="/media/thegreatwall.jpg" alt="Thegreatwall">
+      </a>
+
+
+      <!-- 多加几张示例（以后换成你自己的图片就好） -->
+      <!--
+      <a href="/media/another1.jpg" target="_blank" rel="noopener">
+        <img src="/media/another1.jpg" alt="Another photo 1">
+      </a>
+
+      <a href="/media/another2.jpg" target="_blank" rel="noopener">
+        <img src="/media/another2.jpg" alt="Another photo 2">
+      </a>
+      -->
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var root = document.getElementById('photo-strip');
+  if (!root) return;
+
+  var track = root.querySelector('.ps-track');
+  if (!track) return;
+
+  var direction = 1;    // 1 向右，-1 向左
+  var speed = 0.6;      // 每次滚动的像素（越大越快）
+  var timer = null;
+
+  function step() {
+    var maxScroll = track.scrollWidth - track.clientWidth;
+    if (maxScroll <= 0) return; // 图片太少，不滚了
+
+    var next = track.scrollLeft + direction * speed;
+
+    if (next >= maxScroll) {
+      next = maxScroll;
+      direction = -1;   // 到右边尽头，反向
+    } else if (next <= 0) {
+      next = 0;
+      direction = 1;    // 到左边尽头，反向
+    }
+
+    track.scrollLeft = next;
+  }
+
+  function startAuto() {
+    if (timer) return;
+    timer = setInterval(step, 20);   // 20ms 一步，比较平滑
+  }
+
+  function stopAuto() {
+    if (!timer) return;
+    clearInterval(timer);
+    timer = null;
+  }
+
+  // 鼠标移入暂停，移出继续
+  root.addEventListener('mouseenter', stopAuto);
+  root.addEventListener('mouseleave', startAuto);
+
+  // 初始启动
+  startAuto();
+})();
+</script>
