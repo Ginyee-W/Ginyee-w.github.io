@@ -115,7 +115,4 @@ minify:
 
 
 frontmatter:
-  lastmod:
-    - lastmod
-    - :git
-    - date
+  lastmod: [":git", "lastmod", "date", "publishDate"]
