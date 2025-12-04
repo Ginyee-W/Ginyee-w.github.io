@@ -1,38 +1,5 @@
-{{/* layouts/partials/blox/blog/post_meta.html
-     博客文章标题下面那一行：创建于 / 最近更新于 / 作者 / 阅读时间 */}}
+{{/* layouts/partials/blox/blog/post_meta.html 仅用于测试路径是否正确 */}}
 
-{{- $page := . -}}
-{{- $published := $page.Date -}}
-{{- $updated := $page.Lastmod -}}
-{{- $showUpdated := and $updated (ne (time.Format "2006-01-02" $published) (time.Format "2006-01-02" $updated)) -}}
-
-<p class="text-sm text-gray-500 flex flex-wrap items-center gap-x-2 gap-y-1">
-  <span>【TEST META】</span>
-  {{/* 创建/更新日期 */}}
-  <span>
-    创建于 {{ $published | time.Format "Jan 2, 2006" }}
-    {{- if $showUpdated -}}
-      · 最近更新于 {{ $updated | time.Format "Jan 2, 2006" }}
-    {{- end -}}
-  </span>
-
-  {{/* 作者（只显示第一个作者） */}}
-  {{ with .Params.authors }}
-    {{- $first := index . 0 -}}
-    {{ with site.GetPage (printf "authors/%s" $first) }}
-      <span class="flex items-center gap-x-1">
-        <span class="middot-divider">·</span>
-        <a href="{{ .RelPermalink }}" class="hover:underline">
-          {{ .Title }}
-        </a>
-      </span>
-    {{ end }}
-  {{ end }}
-
-  {{/* 阅读时间 */}}
-  {{ if .ReadingTime }}
-    <span class="middot-divider">·</span>
-    <span>{{ .ReadingTime }} min read</span>
-  {{ end }}
-
+<p style="color:red; font-weight:bold;">
+  TEST META: {{ .Title }}
 </p>
