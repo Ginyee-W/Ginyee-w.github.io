@@ -53,7 +53,3 @@ code.language-sql .cm {
 code.language-sql .o {
   color: #000000 !important;
 }
-/* 目录最多显示到三级标题(H2/H3)，隐藏 H4 及以下 */
-nav[aria-label="On this page"] ul ul ul {
-  display: none;
-}
