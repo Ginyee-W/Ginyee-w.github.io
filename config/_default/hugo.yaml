@@ -25,6 +25,7 @@ cascade:
     share: true
     show_word_count: true
     dark_mode: true
+    math: true
     # Just use Breadcrumb for navigation on blog post pages?
     show_breadcrumb: false
     header:
