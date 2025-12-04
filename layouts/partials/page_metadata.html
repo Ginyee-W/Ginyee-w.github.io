@@ -1,0 +1,44 @@
+{{/* layouts/partials/page_metadata.html
+     自己覆盖主题的 meta：显示 发布时间 +（如果有变化）最后更新时间 + 作者 + 阅读时间 */}}
+
+{{- /* 兼容主题不同调用方式，取到当前页面对象 */ -}}
+{{- $page := .page | default .content | default . -}}
+
+{{- $published := $page.Date -}}
+{{- $updated   := $page.Lastmod -}}
+{{- $fmt      := site.Params.date_format | default "Jan 2, 2006" -}}
+
+{{- /* 判断 lastmod 和 date 是否同一天 */ -}}
+{{- $sameDay := eq (time.Format "2006-01-02" $published) (time.Format "2006-01-02" $updated) -}}
+
+<p class="text-sm text-gray-500 flex flex-wrap items-center gap-x-2 gap-y-1">
+
+  {{/* 日期：创建于 + （如果有变化）最近更新于 */}}
+  <span>
+    创建于 {{ $published | time.Format $fmt }}
+    {{ if not $sameDay }}
+      · 最近更新于 {{ $updated | time.Format $fmt }}
+    {{ end }}
+  </span>
+
+  {{/* 作者（只显示第一个作者） */}}
+  {{ with $page.Params.authors }}
+    {{- $first := index . 0 -}}
+    {{ with site.GetPage (printf "/authors/%s" $first) }}
+      <span>·</span>
+      <span>
+        <a href="{{ .RelPermalink }}" class="hover:underline">
+          {{ .Title }}
+        </a>
+      </span>
+    {{ end }}
+  {{ end }}
+
+  {{/* 阅读时间 */}}
+  {{ with $page.ReadingTime }}
+    <span>·</span>
+    <span>{{ . }} min read</span>
+  {{ end }}
+
+</p>
+
