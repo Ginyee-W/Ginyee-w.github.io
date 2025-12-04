@@ -96,7 +96,7 @@ markup:
     style: github   
   tableOfContents:
     startLevel: 2
-    endLevel: 2
+    endLevel: 3
 related:
   threshold: 80
   includeNewer: true

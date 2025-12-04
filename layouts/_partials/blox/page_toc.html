@@ -1,0 +1,26 @@
+{{/* 自定义页面目录：只显示 H2/H3（最多到三级标题） */}}
+
+{{- $page := .page | default . -}}
+
+{{/* 拿到所有标题 fragment，然后只保留 level=2 或 3 的 */}}
+{{- $headings := $page.Fragments.Headings -}}
+{{- $filtered := where (where $headings "Level" "ge" 2) "Level" "le" 3 -}}
+
+{{- if gt (len $filtered) 0 }}
+<nav class="text-sm" aria-label="On this page">
+  <p class="font-semibold text-gray-700 mb-2">
+    On this page
+  </p>
+  <ul class="space-y-1">
+    {{ range $filtered }}
+      {{- /* H2 不缩进，H3 缩进一点 */ -}}
+      {{- $indent := cond (eq .Level 2) "" "ml-4" -}}
+      <li class="{{ $indent }}">
+        <a href="{{ .Destination }}" class="hover:underline">
+          {{ .Title | safeHTML }}
+        </a>
+      </li>
+    {{ end }}
+  </ul>
+</nav>
+{{- end }}

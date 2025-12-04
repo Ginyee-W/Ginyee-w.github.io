@@ -7,17 +7,7 @@ authors:
 tags:
   - 机器学习
   - 无监督学习
-toc: true 
-# 设置目录的最低级别 (H2 = 2, H3 = 3)
-# 目录将从 H2 开始显示
-# 默认情况下，Hugo Blox 的目录从 H2 开始，因此 start = 2 
-markup:
-  tableOfContents:
-    startLevel: 2 
-    # 设置目录的最高级别 (H3 = 3)
-    # 目录只会显示到 H3 
-    endLevel: 2
----
+
 ## K-Means
 
 K-Means（K-均值）是数据挖掘中一种**无监督学习**的聚类算法，它尝试将数据集划分成 K 个不同的、不重叠的子集（簇，Cluster），使得每个簇内部的数据点尽可能相似，而簇与簇之间的数据点尽可能不相似。
