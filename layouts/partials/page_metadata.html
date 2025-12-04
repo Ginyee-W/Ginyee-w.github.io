@@ -1,25 +1,31 @@
-{{/* layouts/partials/page_metadata.html 自定义文章 meta */}}
+{{/* 自定义文章 meta：创建于 / 最近更新于 + 作者 + 阅读时间 */}}
 
-{{- $page := . -}}
+{{/* 兼容两种调用方式：
+     1) partial "page_metadata" (dict "page" $page ...)
+     2) partial "page_metadata" . （极少数情况）
+*/}}
+{{- $page := .page | default . -}}
+
 {{- $published := $page.Date -}}
-{{- $updated := $page.Lastmod -}}
+{{- $updated   := $page.Lastmod -}}
 {{- $showUpdated := and $updated (ne (time.Format "2006-01-02" $published) (time.Format "2006-01-02" $updated)) -}}
 
 <p class="text-sm text-gray-500 flex flex-wrap items-center gap-x-2 gap-y-1">
 
-  {{/* 日期：创建于 + 最近更新于 */}}
+  {{/* 创建于 / 最近更新于 */}}
   <span>
     创建于 {{ $published | time.Format "Jan 2, 2006" }}
-    {{ if $showUpdated }}
-      &middot; 最近更新于 {{ $updated | time.Format "Jan 2, 2006" }}
-    {{ end }}
+    {{- if $showUpdated -}}
+      · 最近更新于 {{ $updated | time.Format "Jan 2, 2006" }}
+    {{- end -}}
   </span>
 
-  {{/* 作者（只显示第一个作者） */}}
-  {{ with .Params.authors }}
+  {{/* 作者（只取第一个作者） */}}
+  {{ with $page.Params.authors }}
     {{ $first := index . 0 }}
     {{ with site.GetPage (printf "authors/%s" $first) }}
       <span class="flex items-center gap-x-1">
+        <span class="middot-divider"></span>
         <a href="{{ .RelPermalink }}" class="hover:underline">
           {{ .Title }}
         </a>
@@ -28,8 +34,11 @@
   {{ end }}
 
   {{/* 阅读时间 */}}
-  {{ if .ReadingTime }}
-    <span>· {{ .ReadingTime }} min read</span>
+  {{ if $page.ReadingTime }}
+    <span class="middot-divider"></span>
+    <span>
+      {{ $page.ReadingTime }} min read
+    </span>
   {{ end }}
 
 </p>
