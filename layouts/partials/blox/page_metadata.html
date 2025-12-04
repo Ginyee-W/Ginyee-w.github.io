@@ -1,5 +1,38 @@
-{{/* layouts/partials/blox/blog/post_meta.html 仅用于测试路径是否正确 */}}
+{{/* 自定义文章 meta：创建于 / 最近更新于 + 作者 + 阅读时间 */}}
 
-<p style="color:red; font-weight:bold;">
-  TEST META: {{ .Title }}
+{{- $page := .page | default . -}}
+
+{{- $published := $page.Date -}}
+{{- $updated   := $page.Lastmod -}}
+{{- $showUpdated := and $updated (ne (time.Format "2006-01-02" $published) (time.Format "2006-01-02" $updated)) -}}
+
+<p class="text-sm text-gray-500 flex flex-wrap items-center gap-x-2 gap-y-1">
+
+  {{/* 创建时间 + 最近更新时间 */}}
+  <span>
+    创建于 {{ $published | time.Format "Jan 2, 2006" }}
+    {{- if $showUpdated -}}
+      · 最近更新于 {{ $updated | time.Format "Jan 2, 2006" }}
+    {{- end -}}
+  </span>
+
+  {{/* 作者（只取第一个作者） */}}
+  {{ with $page.Params.authors }}
+    {{ $first := index . 0 }}
+    {{ with site.GetPage (printf "authors/%s" $first) }}
+      <span class="flex items-center gap-x-1">
+        <span class="middot-divider">·</span>
+        <a href="{{ .RelPermalink }}" class="hover:underline">
+          {{ .Title }}
+        </a>
+      </span>
+    {{ end }}
+  {{ end }}
+
+  {{/* 阅读时间 */}}
+  {{ with $page.ReadingTime }}
+    <span class="middot-divider">·</span>
+    <span>{{ . }} min read</span>
+  {{ end }}
+
 </p>
