@@ -7,7 +7,16 @@ authors:
 tags:
   - 机器学习
   - 无监督学习
-
+toc: true 
+# 设置目录的最低级别 (H2 = 2, H3 = 3)
+# 目录将从 H2 开始显示
+# 默认情况下，Hugo Blox 的目录从 H2 开始，因此 start = 2 
+markup:
+  tableOfContents:
+    startLevel: 2 
+    # 设置目录的最高级别 (H3 = 3)
+    # 目录只会显示到 H3 
+    endLevel: 3
 ---
 ## K-Means
 
