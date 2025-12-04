@@ -1,9 +1,9 @@
-{{/* 自定义博客文章 meta：创建于 / 最近更新于 + 作者 + 阅读时间 */}}
+{{/* layouts/partials/blox/blog/post_meta.html
+     覆盖 HugoBlox 默认的博客文章 meta
+*/}}
 
-{{- $page := . -}}
-
-{{- $published := $page.Date -}}
-{{- $updated   := $page.Lastmod -}}
+{{- $published := .Date -}}
+{{- $updated   := .Lastmod -}}
 {{- $showUpdated := and $updated (ne (time.Format "2006-01-02" $published) (time.Format "2006-01-02" $updated)) -}}
 
 <p class="text-sm text-gray-500 flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -12,16 +12,16 @@
   <span>
     创建于 {{ $published | time.Format "Jan 2, 2006" }}
     {{- if $showUpdated -}}
-      · 最近更新于 {{ $updated | time.Format "Jan 2, 2006" }}
+      &middot; 最近更新于 {{ $updated | time.Format "Jan 2, 2006" }}
     {{- end -}}
   </span>
 
-  {{/* 作者（只取第一个作者） */}}
-  {{ with $page.Params.authors }}
+  {{/* 作者：只取第一个作者 */}}
+  {{ with .Params.authors }}
     {{ $first := index . 0 }}
     {{ with site.GetPage (printf "authors/%s" $first) }}
       <span class="flex items-center gap-x-1">
-        <span class="middot-divider">·</span>
+        <span class="middot-divider"></span>
         <a href="{{ .RelPermalink }}" class="hover:underline">
           {{ .Title }}
         </a>
@@ -30,9 +30,11 @@
   {{ end }}
 
   {{/* 阅读时间 */}}
-  {{ if $page.ReadingTime }}
-    <span class="middot-divider">·</span>
-    <span>{{ $page.ReadingTime }} min read</span>
+  {{ if .ReadingTime }}
+    <span>
+      <span class="middot-divider"></span>
+      {{ .ReadingTime }} min read
+    </span>
   {{ end }}
 
 </p>
