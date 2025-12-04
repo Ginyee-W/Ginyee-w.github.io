@@ -1,7 +1,7 @@
 ---
 title: 数据库八股
 summary: 笔面试中有关数据库的八股试题整理
-date: 2025-12-01
+date: 2025-11-19
 
 # Featured image
 # Place an image named `featured.jpg/png` in this page's folder and customize its options here.
