@@ -1,3 +1,34 @@
-<span class="text-sm text-gray-500">
-  更新于 {{ .Lastmod | time.Format "2006-01-02" }}
-</span>
+{{/* layouts/partials/blox/blog/post_meta.html */}}
+
+{{- $published := .Date -}}
+{{- $updated   := .Lastmod -}}
+{{- $showUpdated := ne (time.Format "2006-01-02" $published) (time.Format "2006-01-02" $updated) -}}
+
+<p class="text-sm text-gray-500 flex flex-wrap items-center gap-x-2 gap-y-1">
+
+  {{/* 发表日期 */}}
+  <span>{{ $published | time.Format "Jan 2, 2006" }}</span>
+
+  {{/* 如果 lastmod 和 date 不同，就再显示“Last updated …” */}}
+  {{ if $showUpdated }}
+    <span>· Last updated on {{ $updated | time.Format "Jan 2, 2006" }}</span>
+  {{ end }}
+
+  {{/* 作者（只显示第一个作者） */}}
+  {{ with .Params.authors }}
+    {{ $first := index . 0 }}
+    {{ $authorPage := site.GetPage (printf "authors/%s" $first) }}
+    {{ if $authorPage }}
+      <span>·
+        <a href="{{ $authorPage.RelPermalink }}" class="hover:underline">
+          {{ $authorPage.Title }}
+        </a>
+      </span>
+    {{ end }}
+  {{ end }}
+
+  {{/* 阅读时间 */}}
+  {{ if .ReadingTime }}
+    <span>· {{ .ReadingTime }} min read</span>
+  {{ end }}
+</p>
