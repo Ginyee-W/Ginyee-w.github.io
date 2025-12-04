@@ -16,7 +16,7 @@ markup:
     startLevel: 2 
     # 设置目录的最高级别 (H3 = 3)
     # 目录只会显示到 H3 
-    endLevel: 3
+    endLevel: 2
 ---
 ## K-Means
 
