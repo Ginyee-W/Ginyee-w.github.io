@@ -1,10 +1,6 @@
 {{/* 自定义文章 meta：创建于 / 最近更新于 + 作者 + 阅读时间 */}}
 
-{{/* 兼容两种调用方式：
-     1) partial "page_metadata" (dict "page" $page ...)
-     2) partial "page_metadata" . （极少数情况）
-*/}}
-{{- $page := .page | default . -}}
+{{- $page := . -}}
 
 {{- $published := $page.Date -}}
 {{- $updated   := $page.Lastmod -}}
@@ -15,17 +11,17 @@
   {{/* 创建于 / 最近更新于 */}}
   <span>
     创建于 {{ $published | time.Format "Jan 2, 2006" }}
-    {{- if $showUpdated -}}
+    {{- if $showUpdated }}
       · 最近更新于 {{ $updated | time.Format "Jan 2, 2006" }}
-    {{- end -}}
+    {{- end }}
   </span>
 
-  {{/* 作者（只取第一个作者） */}}
+  {{/* 作者（只显示第一个作者） */}}
   {{ with $page.Params.authors }}
     {{ $first := index . 0 }}
     {{ with site.GetPage (printf "authors/%s" $first) }}
       <span class="flex items-center gap-x-1">
-        <span class="middot-divider"></span>
+        <span class="middot-divider">·</span>
         <a href="{{ .RelPermalink }}" class="hover:underline">
           {{ .Title }}
         </a>
@@ -35,10 +31,8 @@
 
   {{/* 阅读时间 */}}
   {{ if $page.ReadingTime }}
-    <span class="middot-divider"></span>
-    <span>
-      {{ $page.ReadingTime }} min read
-    </span>
+    <span class="middot-divider">·</span>
+    <span>{{ $page.ReadingTime }} min read</span>
   {{ end }}
 
 </p>
