@@ -1,0 +1,40 @@
+{{/* 自定义文章 meta：创建于 + 最近更新于 + 作者 + 阅读时间 */}}
+
+{{- $page := .page | default . -}}
+
+{{- $published := $page.Date -}}
+{{- $updated   := $page.Lastmod -}}
+
+{{/* 如果 lastmod 和 date 不同，才显示“最近更新于” */}}
+{{- $showUpdated := and $updated (ne (time.Format "2006-01-02" $published) (time.Format "2006-01-02" $updated)) -}}
+
+<p class="text-sm text-gray-500 flex flex-wrap items-center gap-x-2 gap-y-1">
+
+  {{/* 日期：创建于 + 最近更新于 */}}
+  <span>
+    创建于 {{ $published | time.Format "Jan 2, 2006" }}
+    {{- if $showUpdated -}}
+      &middot; 最近更新于 {{ $updated | time.Format "Jan 2, 2006" }}
+    {{- end -}}
+  </span>
+
+  {{/* 作者（只取第一个） */}}
+  {{- with $page.Params.authors }}
+    {{- $first := index . 0 -}}
+    {{- with site.GetPage (printf "authors/%s" $first) }}
+      <span class="middot-divider"></span>
+      <span class="flex items-center gap-x-1">
+        <a href="{{ .RelPermalink }}" class="hover:underline">
+          {{ .Title }}
+        </a>
+      </span>
+    {{- end -}}
+  {{- end -}}
+
+  {{/* 阅读时间 */}}
+  {{- if $page.ReadingTime }}
+    <span class="middot-divider"></span>
+    <span>{{ $page.ReadingTime }} min read</span>
+  {{- end }}
+
+</p>
