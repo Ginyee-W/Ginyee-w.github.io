@@ -84,12 +84,29 @@ code.language-sql .o {
   margin-bottom: 0.75rem;
 }
 
-/* logo 自身样式 */
+.ack-logos a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 默认状态 */
 .ack-logos img {
   height: 60px;
   max-width: 120px;
   object-fit: contain;
   opacity: 0.9;
+  transition: transform 0.18s ease-out, 
+              box-shadow 0.18s ease-out,
+              opacity 0.18s ease-out;
+  will-change: transform;
+}
+
+/* 鼠标悬停时略微放大 + 轻微阴影 */
+.ack-logos a:hover img {
+  transform: scale(1.08);
+  opacity: 1;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
 
 @media (max-width: 768px) {

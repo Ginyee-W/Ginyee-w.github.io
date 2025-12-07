@@ -55,16 +55,16 @@ website: "https://ginyee-w.github.io/"
     本网页用作自学内容的整理和归档
   </p>
   <div class="ack-logos">
-    <a href="https://www.ntu.edu.sg" target="_blank" rel="noopener">
+    <a href="https://www.ntu.edu.sg" target="_blank" rel="noopener" data-label="NTU">
       <img src="/uploads/thanks/ntu.png" alt="NTU" />
     </a>
-    <a href="https://chatgpt.com/" target="_blank" rel="noopener">
+    <a href="https://chatgpt.com/" target="_blank" rel="noopener" data-label="ChatGPT">
       <img src="/uploads/thanks/chatgpt.png" alt="CHATGPT" />
     </a>
-    <a href="https://typora.io/" target="_blank" rel="noopener">
+    <a href="https://typora.io/" target="_blank" rel="noopener" data-label="Typora">
       <img src="/uploads/thanks/typora.png" alt="TYPORA" />
     </a>
-    <a href="https://y.qq.com/" target="_blank" rel="noopener">
+    <a href="https://y.qq.com/" target="_blank" rel="noopener" data-label="qq音乐">
       <img src="/uploads/thanks/qm.png" alt="qm" />
     </a>
   </div>
