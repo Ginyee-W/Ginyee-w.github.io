@@ -82,7 +82,7 @@ SELECT name, class FROM students_b;
 ```
 * `UNION ALL`不会去重，`UNION`会去重
 ## 窗口函数
-### 排序编号
+### 排名函数
 **1. ROW_NUMBER**
 
 组内顺序编号 <u>(无并列)</u>
@@ -91,6 +91,8 @@ SELECT dept, dt, amount,
 ROW_NUMBER() OVER (PARTITION BY dept ORDER BY dt) AS rn
 FROM sales;
 ```
+* 1,2,3,4,5
+
 **2. RANK**
 
 排名，<u>(有并列), 会跳名次</u>
@@ -99,6 +101,8 @@ SELECT dept, amount,
 RANK() OVER (PARTITION BY dept ORDER BY amount DESC) AS rnk
 FROM sales;
 ```
+* 1,1,3,4,5 
+
 **3. DENSE_RANK**
 
 排名，<u>(有并列), 不会跳名次</u>
@@ -107,9 +111,26 @@ SELECT dept, amount,
 DENSE_RANK() OVER (PARTITION BY dept ORDER BY amount DESC) AS drnk
 FROM sales;
 ```
+* 1,1,2,3,4
+
+**4. PERCENT_RANK**
+
+在集合中有多少比例的值低于当前值，返回一个介于 0.0 到 1.0之间的小数。
+$$
+PERCENT \_ RANK = \frac{RANK-1}{总行数-1}
+$$
+```sql
+SELECT 
+    StudentID, 
+    Score,
+    PERCENT_RANK() OVER (ORDER BY Score) AS PercentRank
+FROM Scores;
+```
+* 0.0,0.25,0.25,0.75,1.0
 ### LAG
 “往前看”上一行（或前几行）的值，而不合并行。
 
+* 往后用`LEAD`
 
 **1. 上一行的值**
 
@@ -165,7 +186,12 @@ LAG(sales, 2) OVER (PARTITION BY emp_id ORDER BY month) AS sales_2_months_ago
 LAG(sales, 1, 0) OVER (ORDER BY month) AS prev_sales
 ```
 * 如果没有上一行，就用 `0` 代替。
-
+### COUNT
+```sql
+SELECT emp_id, dept_id,
+       COUNT(*) OVER (PARTITION BY dept_id) AS dept_size
+FROM employees;
+```
 ## License
 
 
