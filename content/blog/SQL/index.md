@@ -116,9 +116,6 @@ FROM sales;
 **4. PERCENT_RANK**
 
 在集合中有多少比例的值低于当前值，返回一个介于 0.0 到 1.0之间的小数。
-$$
-PERCENT \textunderscore RANK = \frac{RANK-1}{总行数-1}
-$$
 ```sql
 SELECT 
     StudentID, 
