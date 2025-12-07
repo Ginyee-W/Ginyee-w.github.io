@@ -59,18 +59,17 @@ code.language-sql .o {
   flex-wrap: wrap;
   gap: 1.5rem;
   align-items: center;
-  justify-content: center; /* 居中显示 */
+  justify-content: center;  /* 居中 */
   margin-top: 0.5rem;
 }
 
 .ack-logos img {
-  height: 40px;          /* 控制小图大小 */
+  height: 40px;       /* 控制 logo 大小 */
   max-width: 120px;
   object-fit: contain;
   opacity: 0.9;
 }
 
-/* 手机上稍微再小一点 */
 @media (max-width: 768px) {
   .ack-logos img {
     height: 32px;

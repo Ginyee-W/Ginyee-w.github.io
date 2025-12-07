@@ -19,19 +19,6 @@ sections:
         image : 'content/authors/admin/avatar.jpg'
         size: medium
         shape: circle
-  - block: markdown
-    id: acknowledgements
-    content:
-      subtitle: ''
-      text: |
-        <div class="ack-logos">
-          <a href="https://www.ntu.edu.sg" target="_blank" rel="noopener">
-            <img src="/uploads/thanks/ntu.png" alt="NTU" />
-          </a>
-        </div>
-    design:
-      columns: '1'
-      
     # 2. 最新照片：横向可滚动
   - block: markdown
     id: latest-photos

@@ -52,3 +52,8 @@ website: "https://ginyee-w.github.io/"
 
 本网页用作自学内容的整理和归档
 
+<div class="ack-logos">
+  <a href="https://www.ntu.edu.sg" target="_blank" rel="noopener">
+    <img src="/uploads/thanks/ntu.png" alt="NTU" />
+  </a>
+</div>
