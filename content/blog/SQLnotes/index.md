@@ -1,6 +1,6 @@
 ---
 title: SQL笔记
-summary: SQL基础语法与案例分析
+summary: SQL基础语法和常用函数
 date: 2025-12-07
 authors:
   - admin
