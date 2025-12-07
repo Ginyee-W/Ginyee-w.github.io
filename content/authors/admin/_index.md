@@ -61,6 +61,9 @@ website: "https://ginyee-w.github.io/"
     <a href="https://chatgpt.com/" target="_blank" rel="noopener" data-label="ChatGPT">
       <img src="/uploads/thanks/chatgpt.png" alt="CHATGPT" />
     </a>
+    <a href="https://www.xiaohongshu.com/user/profile/6147e4e2000000000201acea" target="_blank" rel="noopener" data-label="冰雪碧好喝的小红书">
+      <img src="/uploads/thanks/rednote.png" alt="REDNOTE" />
+    </a>
     <a href="https://y.qq.com/" target="_blank" rel="noopener" data-label="qq音乐">
       <img src="/uploads/thanks/qm.png" alt="qm" />
     </a>
