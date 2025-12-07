@@ -107,6 +107,65 @@ SELECT dept, amount,
 DENSE_RANK() OVER (PARTITION BY dept ORDER BY amount DESC) AS drnk
 FROM sales;
 ```
+### LAG
+“往前看”上一行（或前几行）的值，而不合并行。
+
+
+**1. 上一行的值**
+
+
+
+```sql
+SELECT recordDate,
+       Temperature,
+       LAG(Temperature) OVER (ORDER BY recordDate) AS prev_Temperature
+FROM weather;
+```
+*气温和前一天对比
+
+效果（示意）：
+
+| recordDate | Temperature | prev_Temperature |
+| ---------- | ----------- | ---------------- |
+| 1号         | 10          | NULL             |
+| 2号         | 12          | 10               |
+| 3号         | 9           | 12               |
+
+*第一行没有“前一行”，所以 `prev_Temperature` 是 `NULL`。
+
+
+**2. 按组使用：每个部门 / 每个用户内部自己比**
+
+`PARTITION BY` 可以让每个组单独使用 LAG。
+
+```sql
+SELECT emp_id,
+       month,
+       sales,
+       LAG(sales) OVER (
+           PARTITION BY emp_id
+           ORDER BY month
+       ) AS prev_sales
+FROM sales_table;
+```
+*每个员工月度销量环比
+
+**3. 往前不止一行：offset 参数**
+
+```sql
+LAG(sales, 2) OVER (PARTITION BY emp_id ORDER BY month) AS sales_2_months_ago
+```
+
+* 取的是“前两行”的 `sales`
+* 如果前两行不存在 → 默认 `NULL`
+
+可以配合 default 值：
+
+```sql
+LAG(sales, 1, 0) OVER (ORDER BY month) AS prev_sales
+```
+*如果没有上一行，就用 `0` 代替。
+
 ## License
 
 
