@@ -92,7 +92,7 @@ code.language-sql .o {
 
 /* 默认状态的图片 */
 .ack-logos img {
-  height: 50px;
+  height: 40px;
   max-width: 120px;
   object-fit: contain;
   opacity: 0.9;
