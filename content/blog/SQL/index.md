@@ -189,6 +189,18 @@ SELECT emp_id, dept_id,
        COUNT(*) OVER (PARTITION BY dept_id) AS dept_size
 FROM employees;
 ```
+## 执行顺序
+**1. FROM/JOIN**
+
+**2. WHERE**
+
+**3. GROUP BY**
+
+**4. HAVING**
+
+**5. SELECT**
+
+**6. ORDER BY**
 ## License
 
 
