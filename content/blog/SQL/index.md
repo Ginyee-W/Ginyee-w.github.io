@@ -19,6 +19,7 @@ WHERE customers.id NOT IN (
 ```
 **作用:** 找出所有没有下过订单的顾客记录。它通过比较 `customers.id` 是否不在 `orders`表中的 `customerId` 列表中来实现。
 ### LIMIT
+限制返回行数
 ```sql
 SELECT DISTINCT salary
 FROM Employee
@@ -52,6 +53,36 @@ SUM(amount) OVER (
 FROM sales;
 ```
 **作用:** 在每个`dept`内，按日期`dt`顺序，为每一行算出“从这个部门最早的销售到当前日期为止的累计销售额”。
+### DISTINCT
+**1. 去重**
+```sql
+SELECT DISTINCT dept_id
+FROM employees;
+```
+**2. 多列去重**
+
+返回不同的多列组合
+```sql
+SELECT DISTINCT dept_id, job_title
+FROM employees;
+```
+**3. 结合COUNT**
+```sql
+SELECT emp_id, dept_id,
+COUNT(DISTINCT job_title) OVER (PARTITION BY dept_id) AS unique_jobs
+FROM employees;
+```
+在不合并行的前提下，给每个员工所在部门统计该部门里有多少种不同的职位
+### UNION ALL
+将两列上下拼在一起
+```sql
+SELECT name, homework FROM students_a
+UNION ALL
+SELECT name, class FROM students_b;
+```
+* `UNION ALL`不会去重，`UNION`会去重
+## 窗口函数
+
 ## License
 
 
