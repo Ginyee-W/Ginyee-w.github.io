@@ -54,17 +54,39 @@ code.language-sql .o {
   color: #000000 !important;
 }
 
-.ack-logos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  align-items: center;
-  justify-content: center;  /* 居中 */
+/* 外层：文字 + 图片整体居中 */
+.author-ack-block {
+  text-align: center;
   margin-top: 0.5rem;
 }
 
+/* 那行说明文字 */
+.author-desc {
+  margin-bottom: 0.75rem;
+}
+
+/* 图片一排：用 inline-flex，这样宽度等于这排图的宽度 */
+.ack-logos {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* 在图片上方画一条和图片一样宽的灰线 */
+.ack-logos::before {
+  content: "";
+  display: block;
+  height: 1px;
+  background: #ddd;
+  margin-bottom: 0.75rem;
+}
+
+/* logo 自身样式 */
 .ack-logos img {
-  height: 60px;       /* 控制 logo 大小 */
+  height: 60px;
   max-width: 120px;
   object-fit: contain;
   opacity: 0.9;
