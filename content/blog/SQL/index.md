@@ -82,7 +82,31 @@ SELECT name, class FROM students_b;
 ```
 * `UNION ALL`不会去重，`UNION`会去重
 ## 窗口函数
+### 排序编号
+**1. ROW_NUMBER**
 
+组内顺序编号 <u>(无并列)</u>
+```sql
+SELECT dept, dt, amount,
+ROW_NUMBER() OVER (PARTITION BY dept ORDER BY dt) AS rn
+FROM sales;
+```
+**2. RANK**
+
+排名，<u>(有并列), 会跳名次</u>
+```sql
+SELECT dept, amount,
+RANK() OVER (PARTITION BY dept ORDER BY amount DESC) AS rnk
+FROM sales;
+```
+**3. DENSE_RANK**
+
+排名，<u>(有并列), 不会跳名次</u>
+```sql
+SELECT dept, amount,
+DENSE_RANK() OVER (PARTITION BY dept ORDER BY amount DESC) AS drnk
+FROM sales;
+```
 ## License
 
 
