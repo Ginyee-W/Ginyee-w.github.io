@@ -121,7 +121,7 @@ SELECT recordDate,
        LAG(Temperature) OVER (ORDER BY recordDate) AS prev_Temperature
 FROM weather;
 ```
-*气温和前一天对比
+* 气温和前一天对比
 
 效果（示意）：
 
@@ -131,7 +131,7 @@ FROM weather;
 | 2号         | 12          | 10               |
 | 3号         | 9           | 12               |
 
-*第一行没有“前一行”，所以 `prev_Temperature` 是 `NULL`。
+* 第一行没有“前一行”，所以 `prev_Temperature` 是 `NULL`。
 
 
 **2. 按组使用：每个部门 / 每个用户内部自己比**
@@ -148,7 +148,7 @@ SELECT emp_id,
        ) AS prev_sales
 FROM sales_table;
 ```
-*每个员工月度销量环比
+* 每个员工月度销量环比
 
 **3. 往前不止一行：offset 参数**
 
@@ -164,7 +164,7 @@ LAG(sales, 2) OVER (PARTITION BY emp_id ORDER BY month) AS sales_2_months_ago
 ```sql
 LAG(sales, 1, 0) OVER (ORDER BY month) AS prev_sales
 ```
-*如果没有上一行，就用 `0` 代替。
+* 如果没有上一行，就用 `0` 代替。
 
 ## License
 
