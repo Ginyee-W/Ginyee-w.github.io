@@ -153,6 +153,64 @@ SELECT
     COUNT(*) * 1.0 / (SELECT total_cnt FROM active_creator) AS creator_ratio
 FROM three_day_creator;
 ```
+## T3
+`滑动窗口函数`
+
+统计 **2021 年国庆头 3 天**（2021-10-01～2021-10-03）**每类视频每天的：**
+
+1. 近 7 天（包含当天）**总点赞量** `sum_like_cnt_7d`
+2. 近 7 天（包含当天）**最大单天转发量** `max_retweet_cnt_7d`
+
+> 要求：  
+> - 结果按照 **视频类型 `tag` 降序**，**日期 `dt` 升序** 排序；  
+> - 假设 2021 年数据量足够多，至少每个类别在国庆头 3 天及之前一周的每天都有播放记录。
+
+```sql
+WITH d AS (
+    -- 先按 “日期 + 类别” 汇总当天的点赞数和转发数
+    SELECT
+        t2.tag,
+        DATE(t1.start_time) AS dt,
+        SUM(t1.if_like)    AS sum_like,   -- 当天总点赞数
+        SUM(t1.if_retweet) AS sum_re      -- 当天总转发数
+    FROM tb_user_video_log AS t1
+    JOIN tb_video_info      AS t2
+          ON t1.video_id = t2.video_id   -- 通过 video_id 关联
+    WHERE YEAR(t1.start_time) = 2021     -- 只统计 2021 年
+    GROUP BY t2.tag, DATE(t1.start_time)
+),
+
+temp AS (
+    -- 在每个 tag 内，按日期使用窗口函数统计近 7 天的数据
+    SELECT
+        tag,
+        dt,
+        -- 近 7 天（含当天）总点赞量
+        SUM(sum_like) OVER (
+            PARTITION BY tag
+            ORDER BY dt
+            ROWS 6 PRECEDING -- 滑动窗口函数
+        ) AS sum_like_cnt_7d,
+
+        -- 近 7 天（含当天）单日转发量最大值
+        MAX(sum_re)  OVER (
+            PARTITION BY tag
+            ORDER BY dt
+            ROWS 6 PRECEDING
+        ) AS max_retweet_cnt_7d
+    FROM d
+)
+
+-- 只取 2021-10-01 ~ 2021-10-03（国庆头三天）的记录
+SELECT DISTINCT
+    tag,
+    dt,
+    sum_like_cnt_7d,
+    max_retweet_cnt_7d
+FROM temp
+WHERE dt BETWEEN '2021-10-01' AND '2021-10-03'
+ORDER BY tag DESC, dt;
+```
 ## License
 
 
