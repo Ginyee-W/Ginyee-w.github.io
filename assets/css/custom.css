@@ -137,3 +137,22 @@ code.language-sql .o {
     height: 32px;
   }
 }
+/* 把头像右下角的小圆圈换成自定义图片 */
+.avatar-emoji {
+  /* 隐藏原来的 🦁 字符 */
+  font-size: 0;
+  color: transparent;
+
+  /* 换成你自己的图片 */
+  background-image: url("/media/yyqj.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* 可以根据图片调大小（不写的话用主题默认大小也行） */
+  width: 42px;
+  height: 42px;
+
+  /* 保持圆形 */
+  border-radius: 999px;
+}
