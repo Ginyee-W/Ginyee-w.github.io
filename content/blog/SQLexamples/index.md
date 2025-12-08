@@ -105,6 +105,54 @@ GROUP BY gender, age_group
 ORDER BY gender, age_group;
 
 ```
+T2
+`环比`
+
+有一张表 `creator_daily` 记录创作者每天的视频播放情况：
+
+- `dt` ：日期（DATE）
+- `creator_id` ：创作者 id
+- `play_cnt` ：该创作者当天发布的视频的总播放量  
+  > 只在创作者**当天有发布视频**时才在表中产生一行记录。
+
+请使用 SQL（可以使用窗口函数）统计：在某一时间区间内（例如 `2024-01-01` ~ `2024-01-31`），  
+**“连续 3 天都有发视频且播放量每天相对前一天环比增长超过 15%” 的创作者，占该时间段内所有发过视频创作者的比例。**
+```sql
+WITH base AS (
+    SELECT
+        dt,
+        creator_id,
+        play_cnt,
+        LEAD(dt, 1) OVER (PARTITION BY creator_id ORDER BY dt)  AS dt2,
+        LEAD(dt, 2) OVER (PARTITION BY creator_id ORDER BY dt)  AS dt3,
+        LEAD(play_cnt, 1) OVER (PARTITION BY creator_id ORDER BY dt) AS play2,
+        LEAD(play_cnt, 2) OVER (PARTITION BY creator_id ORDER BY dt) AS play3
+    FROM creator_daily
+    WHERE dt BETWEEN '2024-01-01' AND '2024-01-31'
+),
+
+-- 满足 “连续 3 天发视频且播放量连续两天环比 > 15%” 的创作者
+three_day_creator AS (
+    SELECT DISTINCT creator_id
+    FROM base
+    WHERE dt2 = DATE_ADD(dt, INTERVAL 1 DAY)
+      AND dt3 = DATE_ADD(dt, INTERVAL 2 DAY)
+      AND play2 >= play_cnt * 1.15
+      AND play3 >= play2 * 1.15
+),
+
+-- 时间区间内所有发过视频的创作者总数
+active_creator AS (
+    SELECT COUNT(DISTINCT creator_id) AS total_cnt
+    FROM creator_daily
+    WHERE dt BETWEEN '2024-01-01' AND '2024-01-31'
+)
+
+-- 要求的创作者占比
+SELECT
+    COUNT(*) * 1.0 / (SELECT total_cnt FROM active_creator) AS creator_ratio
+FROM three_day_creator;
+```
 ## License
 
 
