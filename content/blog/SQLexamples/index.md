@@ -105,7 +105,7 @@ GROUP BY gender, age_group
 ORDER BY gender, age_group;
 
 ```
-##T2
+## T2
 `环比`
 
 有一张表 `creator_daily` 记录创作者每天的视频播放情况：
