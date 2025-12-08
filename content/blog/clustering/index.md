@@ -221,10 +221,10 @@ $$
      b(i) = \min_{C' \neq C} d(i, C')
      $$
 
-有了 (a(i))、(b(i))，轮廓系数定义为：
+  有了 (a(i))、(b(i))，轮廓系数定义为：
 
 $$
-s(i) = \frac{b(i) - a(i)}{\max{a(i), b(i)}}
+s(i) = \frac{b(i) - a(i)}{\max\{a(i), b(i)\}}
 $$
 
 
