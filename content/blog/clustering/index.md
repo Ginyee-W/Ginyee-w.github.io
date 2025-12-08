@@ -193,7 +193,11 @@ $$
 
 * **方法：** 尝试不同的 $K$ 值，计算对应的 WCSS。
 * **判断：** 绘制 WCSS 与 $K$ 值的关系图，曲线中 WCSS 显著下降速度变慢的点，形似“肘部”，这个点对应的 $K$ 值通常被认为是最佳的。
-<img src="clustering1.png" alt="肘部法则" width="400">
+
+<figure style="text-align: center;">
+  <img src="clustering1.png" alt="肘部法则" width="100%">
+  <figcaption>图 1：肘部法则</figcaption>
+</figure>
 
 **3. 轮廓系数 (Silhouette Score)**
 
