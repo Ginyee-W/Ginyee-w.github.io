@@ -211,6 +211,100 @@ FROM temp
 WHERE dt BETWEEN '2021-10-01' AND '2021-10-03'
 ORDER BY tag DESC, dt;
 ```
+
+## T3
+`排名`
+
+从听歌流水中找到 **18–25 岁用户** 在 **2022 年** 每个月播放次数 **Top 3** 的 **周杰伦** 的歌曲。
+
+**表结构**
+
+**流水表 `play_log`**
+
+| 字段名  | 类型 | 含义     |
+|--------|------|----------|
+| fdate  | date | 日期     |
+| user_id| int  | 用户 ID  |
+| song_id| int  | 歌曲 ID  |
+
+**歌曲表 `song_info`**
+
+| 字段名      | 类型 | 含义     |
+|-------------|------|----------|
+| song_id     | int  | 歌曲 ID  |
+| song_name   | text | 歌曲名称 |
+| singer_name | text | 歌手名称 |
+
+**示例数据：**
+
+| song_id | song_name       | singer_name |
+|--------|-----------------|-------------|
+| 0      | 明明就          | 周杰伦      |
+| 1      | 说好的幸福呢    | 周杰伦      |
+| 2      | 江南            | 林俊杰      |
+| 3      | 大笨钟          | 周杰伦      |
+| 4      | 黑键            | 林俊杰      |
+
+**用户表 `user_info`**
+
+| 字段名  | 类型 | 含义   |
+|--------|------|--------|
+| user_id| int  | 用户ID |
+| age    | int  | 年龄   |
+
+**示例数据：**
+
+| user_id | age |
+|---------|-----|
+| 10000   | 18  |
+
+
+**输出字段：**
+
+| 字段名    | 含义                         |
+|----------|------------------------------|
+| month    | 月份（1–12）                 |
+| ranking  | 当月该歌曲播放次数的名次     |
+| song_name| 歌曲名称                     |
+| play_pv  | 当月该歌曲的播放次数         |
+
+**示例输出（部分）：**
+| month | ranking | song_name     | play_pv |
+|-------|---------|---------------|---------|
+| 1     | 1       | 明明就        | 4       |
+| 1     | 2       | 说好的幸福呢  | 4       |
+| 1     | 3       | 大笨钟        | 2       |
+| 2     | 1       | 明明就        | 2       |
+
+
+```sql
+SELECT
+    month,
+    ranking,
+    song_name,
+    play_pv
+FROM (
+    SELECT
+        MONTH(p.fdate) AS month,
+        s.song_name,
+        COUNT(*) AS play_pv,
+        DENSE_RANK() OVER (
+            PARTITION BY MONTH(p.fdate)
+            ORDER BY COUNT(*) DESC
+        ) AS ranking
+    FROM play_log AS p
+    JOIN user_info AS u
+        ON p.user_id = u.user_id
+    JOIN song_info AS s
+        ON p.song_id = s.song_id
+    WHERE YEAR(p.fdate) = 2022
+      AND u.age BETWEEN 18 AND 25
+      AND s.singer_name = '周杰伦'
+    GROUP BY MONTH(p.fdate), s.song_name
+) AS t
+WHERE ranking <= 3
+ORDER BY month, ranking;
+```
 ## License
 
 
