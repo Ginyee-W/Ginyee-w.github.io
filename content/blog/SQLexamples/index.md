@@ -305,6 +305,63 @@ FROM (
 WHERE ranking <= 3
 ORDER BY month, ranking;
 ```
+
+## T5
+`异常`
+**找出最近7天“补贴消耗异常”的商家（高于历史均值+3σ）**
+
+**示例思路：**
+
+* 先算商家在“历史窗口”的均值和标准差
+* 再算最近7天的消耗
+* 对比阈值输出 Top 商家
+
+```sql
+WITH hist AS (
+  SELECT
+    merchant_id,
+    AVG(subsidy_cost) AS mu,
+    STDDEV_POP(subsidy_cost) AS sigma
+  FROM dwd_merchant_day
+  WHERE dt BETWEEN DATE_SUB(CURRENT_DATE, 60) AND DATE_SUB(CURRENT_DATE, 8)
+  GROUP BY merchant_id
+),
+recent AS (
+  SELECT
+    merchant_id,
+    SUM(subsidy_cost) AS cost_7d
+  FROM dwd_merchant_day
+  WHERE dt BETWEEN DATE_SUB(CURRENT_DATE, 7) AND CURRENT_DATE
+  GROUP BY merchant_id
+)
+SELECT
+  r.merchant_id, r.cost_7d, h.mu, h.sigma
+FROM recent r
+JOIN hist h ON r.merchant_id = h.merchant_id
+WHERE r.cost_7d > (h.mu * 7 + 3 * h.sigma * SQRT(7))
+ORDER BY r.cost_7d DESC;
+```
+## T6
+`转化率`
+
+**计算每个投放计划的漏斗（曝光→点击→下单→支付），并输出转化率**
+
+```sql
+SELECT
+  plan_id,
+  COUNT(DISTINCT CASE WHEN event='impression' THEN user_id END) AS uv_imp,
+  COUNT(DISTINCT CASE WHEN event='click' THEN user_id END)      AS uv_clk,
+  COUNT(DISTINCT CASE WHEN event='order' THEN user_id END)      AS uv_ord,
+  COUNT(DISTINCT CASE WHEN event='pay' THEN user_id END)        AS uv_pay,
+  1.0 * COUNT(DISTINCT CASE WHEN event='click' THEN user_id END)
+      / NULLIF(COUNT(DISTINCT CASE WHEN event='impression' THEN user_id END),0) AS ctr,
+  1.0 * COUNT(DISTINCT CASE WHEN event='pay' THEN user_id END)
+      / NULLIF(COUNT(DISTINCT CASE WHEN event='click' THEN user_id END),0) AS cvr_click2pay
+FROM dwd_plan_event
+WHERE dt = CURRENT_DATE
+GROUP BY plan_id;
+```
+
 ## License
 
 
