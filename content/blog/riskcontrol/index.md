@@ -397,31 +397,31 @@ GMV 和 ROI 在电商投放/风控里几乎是天天挂在嘴边的两个核心�
 
 **召回率 Recall / TPR（抓到多少风险）**
 
-[
+$$
 Recall = \frac{TP}{TP+FN}
-]
+$$
 
 * 越高越少漏放（挽损更好），但可能误杀会上升。
 
 **精确率 Precision（你拦的有多少真是风险）**
 
-[
+$$
 Precision = \frac{TP}{TP+FP}
-]
+$$
 
 * 越高说明“拦得准”，误杀相对少。
 
 **F1（Precision 和 Recall 的折中）**
 
-[
+$$
 F1 = \frac{2\cdot Precision\cdot Recall}{Precision+Recall}
-]
+$$
 
 **准确率 Accuracy（不建议在风控里单看）**
 
-[
+$$
 Accuracy=\frac{TP+TN}{TP+FP+TN+FN}
-]
+$$
 
 ---
 
