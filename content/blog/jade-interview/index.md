@@ -1,6 +1,6 @@
 ---
 title: Just for Jade
-summary: 静怡独享
+summary: 静怡🐷独享
 date: 2026-09-13
 authors:
   - admin
@@ -75,6 +75,6 @@ authors:
 * 除了识别风险还能做什么对应的策略
 
 ## 用增类面试
-### 电商
+
 ## 数据类面试
 
