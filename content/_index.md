@@ -29,6 +29,17 @@ sections:
     design:
       spacing:
         padding: ['3rem', 0, '3rem', 0]
+  - block: markdown
+    id: paper-reading-library
+    content:
+      title: '论文精读馆'
+      text: |-
+        对照原文与中文译文，阅读论文推导、原始图表与逐段解读。
+
+        [进入论文精读馆 →](https://ginyee-w.github.io/paper-reading-library/)
+    design:
+      spacing:
+        padding: ['2rem', 0, '2rem', 0]
   # ③ 原来的文章列表 block 保持不动
   - block: collection
     content:
