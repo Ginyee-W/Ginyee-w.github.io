@@ -1,4 +1,9 @@
 ---
+draft: true
+build:
+  render: never
+  list: never
+  publishResources: false
 title: Just for Jade
 summary: 静怡🐷独享
 date: 2026-09-13
