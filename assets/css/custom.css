@@ -185,7 +185,7 @@ nav.hb-toc a[style*="padding-left"] {
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   }
 
-  #site-header > .navbar > #nav-menu {
+  #site-header > .navbar > #nav-menu.navbar-nav {
     display: flex;
     grid-column: 2;
   }
