@@ -97,7 +97,6 @@ code.language-sql .o {
   object-fit: contain;
   opacity: 0.9;
   transition: transform 0.18s ease-out,
-              box-shadow 0.18s ease-out,
               opacity 0.18s ease-out;
   will-change: transform;
 }
@@ -106,7 +105,47 @@ code.language-sql .o {
 .ack-logos a:hover img {
   transform: scale(1.08);
   opacity: 1;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* Clip the white background to the outline of each colorful logo. */
+.ack-logos img[src$="/ntu.png"] {
+  clip-path: polygon(
+    12.6% 2.2%, 87% 2.2%, 87% 53.4%, 86.5% 58.5%, 84.6% 64.8%,
+    78.6% 75.8%, 68.4% 87.2%, 59% 94.3%, 51.2% 97.8%, 48.4% 97.8%,
+    44.2% 96.5%, 37.2% 92.3%, 27.3% 83.7%, 18.9% 73%, 14.5% 63.9%, 12.6% 55.6%
+  );
+}
+
+.ack-logos img[src$="/rednote.png"] {
+  clip-path: polygon(
+    20.8% 2.6%, 78.5% 2.6%, 85.7% 4.4%, 90.1% 7.2%, 93.5% 10.6%,
+    96.9% 17%, 97.8% 21.3%, 97.8% 78.4%, 96.9% 83%, 95.1% 87%,
+    90.4% 92.6%, 84.7% 95.9%, 76.6% 97.4%, 23.4% 97.4%, 17.7% 96.8%,
+    14% 95.6%, 10.9% 94%, 6.5% 90.4%, 2.8% 83.9%, 1.2% 75%,
+    1.2% 25.3%, 2.2% 17.9%, 4.6% 12.1%, 9% 7.2%, 14.3% 4.1%
+  );
+}
+
+.ack-logos img[src$="/qm.png"] {
+  clip-path: polygon(
+    72.6% 3.8%, 72.9% 3.8%, 73.6% 4.5%, 74.9% 12.6%, 78.4% 15.4%,
+    83.6% 21.3%, 88.4% 29.2%, 90.7% 36.1%, 92.3% 44.5%, 92.3% 54.4%,
+    91% 61.8%, 88.4% 69.4%, 86% 73.8%, 82.3% 79.1%, 77.3% 84.4%,
+    71% 89%, 63.8% 92.5%, 59.2% 93.8%, 49.9% 94.8%, 47.1% 94.8%,
+    39.7% 93.8%, 30.9% 90.6%, 23.4% 85.8%, 16.7% 79.1%, 10.7% 69.1%,
+    7.7% 59.9%, 6.6% 48.6%, 8.4% 36.1%, 12.1% 26.9%, 17.7% 18.8%,
+    23.2% 13.6%, 30.9% 8.2%, 37.5% 5.7%, 44.3% 4.3%
+  );
+}
+
+/* Convert the monochrome logo's white pixels to transparency. */
+.ack-logos img[src$="/chatgpt.png"] {
+  --logo-knockout: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='knockout' color-interpolation-filters='sRGB'%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -.2126 -.7152 -.0722 0 1'/%3E%3CfeComposite in2='SourceAlpha' operator='in'/%3E%3C/filter%3E%3C/svg%3E#knockout");
+  filter: var(--logo-knockout);
+}
+
+.dark .ack-logos img[src$="/chatgpt.png"] {
+  filter: var(--logo-knockout) invert(1);
 }
 
 /* 悬停时显示 label 的小气泡 */
